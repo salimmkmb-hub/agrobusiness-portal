@@ -1,17 +1,36 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 
 const app = express();
 
-// 1. Unganisha Firebase Admin SDK
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+// 1. Unganisha Firebase Admin SDK Safi
+let serviceAccount;
 
-initializeApp({
-  credential: cert(serviceAccount)
-});
+try {
+  // Jaribu kusoma secret file kwanza (Render Secret File au Local file)
+  const secretPath = path.join(__dirname, 'serviceAccountKey.json');
+ 
+  if (fs.existsSync(secretPath)) {
+    serviceAccount = require(secretPath);
+  } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    if (serviceAccount.private_key) {
+      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    }
+  }
+
+  initializeApp({
+    credential: cert(serviceAccount)
+  });
+
+  console.log("Firebase Admin SDK initialized successfully!");
+} catch (error) {
+  console.error("Firebase Admin Initialization Error:", error.message);
+}
 
 const db = getFirestore();
 
