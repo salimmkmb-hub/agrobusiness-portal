@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuhusu Sisi | AgroBusiness Portal</title>
+   
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Bar -->
+    <header class="bg-emerald-800 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2.5">
+                <i class="fa-solid fa-wheat-awn text-emerald-400 text-2xl"></i>
+                <span class="text-xl font-bold tracking-tight">AgroBusiness Portal</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-xl transition flex items-center gap-2 border border-emerald-600">
+                    <i class="fa-solid fa-arrow-left"></i> Rudi Sokoni
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-emerald-900 text-white py-16 md:py-24 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+            <span class="bg-emerald-800 text-emerald-300 text-xs font-semibold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4 border border-emerald-700">
+                Jukwaa Rasmi la Kilimo, Mifugo na Uvuvi
+            </span>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+                Kituo Cha Kidijitali Kitakachobadilisha Soko la Mazao Tanzania
+            </h1>
+            <p class="text-base md:text-lg text-emerald-100 max-w-3xl mx-auto font-normal leading-relaxed">
+                Tunanuia kuondoa kizuizi kati ya wazalishaji wa vijijini na masoko ya mijini kwa kutumia teknolojia rahisi ya Tovuti na USSD.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16 flex-grow">
+
+        <!-- Section 1: Historia na Shughuli Zetu -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-4">
+                <div class="inline-flex items-center gap-2 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-bullseye"></i> Sisi ni Nani?
+                </div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight">
+                    Kuunganisha Wakulima na Wavuvi Moja kwa Moja na Masoko
+                </h2>
+                <p class="text-sm md:text-base leading-relaxed text-slate-600">
+                    <strong>AgroBusiness Portal</strong> ni mfumo shirikishi wa kidijitali ulioasisiwa kuleta mapinduzi katika sekta ya Kilimo, Mifugo, na Uvuvi nchini Tanzania. Jukwaa hili linatoa fursa kwa Mkulima, Mfugaji, na Mvuvi kutoka mkoa wowote kusajili na kuonyesha mazao yake papo hapo.
+                </p>
+                <p class="text-sm md:text-base leading-relaxed text-slate-600">
+                    Kupitia mfumo wetu wa kipekee unaofanya kazi mtandaoni (Website) na bila mtandao wa intaneti (USSD Portal), tunahakikisha hata wazalishaji wa maeneo ya mbali wanafikia wanunuzi na kupata bei ya haki ya mazao yao.
+                </p>
+            </div>
+           
+            <!-- Highlight Cards -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center font-bold text-lg mb-2">
+                        🌱
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Mazao ya Kilimo</h3>
+                    <p class="text-xs text-slate-500">Mchele, Korosho, Mahindi, Viungo na Mazao yote ya Biashara.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-10 h-10 bg-sky-100 text-sky-800 rounded-xl flex items-center justify-center font-bold text-lg mb-2">
+                        🐟
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Bidhaa za Uvuvi</h3>
+                    <p class="text-xs text-slate-500">Samaki wabichi, Wakukausha, Dagaa, na Dagaa wa Ziwa na Bahari.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center font-bold text-lg mb-2">
+                        🐄
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Mifugo & Mazao yake</h3>
+                    <p class="text-xs text-slate-500">Ng'ombe, Mbuzi, Kuku wa Asili, Maziwa, na Nyama.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-10 h-10 bg-purple-100 text-purple-800 rounded-xl flex items-center justify-center font-bold text-lg mb-2">
+                        📱
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">USSD Integration</h3>
+                    <p class="text-xs text-slate-500">Uwezo wa kusajili mazao kupitia simu ya kawaida bila intaneti.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Dira na Mikakati (Vision & Mission) -->
+        <section class="bg-emerald-800 text-white p-8 md:p-12 rounded-3xl shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-3">
+                <div class="text-emerald-300 font-bold text-xs uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-eye"></i> Dira Yetu (Vision)
+                </div>
+                <h3 class="text-xl font-bold">Kuwa Jukwaa Namba Moja la Biashara ya Mazao Afrika Mashariki</h3>
+                <p class="text-xs md:text-sm text-emerald-100 leading-relaxed">
+                    Kujenga mfumo wa kibiashara unaoaminika ambapo hakuna mkulima wala mvuvi atakayepoteza mazao yake kwa kukosa soko au kuuzwa kwa bei ya hasara.
+                </p>
+            </div>
+
+            <div class="space-y-3 border-t md:border-t-0 md:border-l border-emerald-700/80 pt-6 md:pt-0 md:pl-8">
+                <div class="text-emerald-300 font-bold text-xs uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-rocket"></i> Dhumuni Letu (Mission)
+                </div>
+                <h3 class="text-xl font-bold">Kutumia Teknolojia Kurahisisha Mnyororo wa Thamani</h3>
+                <p class="text-xs md:text-sm text-emerald-100 leading-relaxed">
+                    Kutoa zana za kidijitali zinazompa mnunuzi taarifa sahihi za mahali mazao yalipo na kumwezesha kuwasiliana na muuzaji moja kwa moja bila urasimu au madalali wasio waaminifu.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Wamiliki & Timu ya Uongozi (Leadership & Founders) -->
+        <section class="space-y-8">
+            <div class="text-center space-y-2">
+                <span class="text-xs font-bold text-emerald-800 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">
+                    Uongozi na Waasisi
+                </span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight">
+                    Wamiliki na Viongozi wa AgroBusiness
+                </h2>
+                <p class="text-xs md:text-sm text-slate-500 max-w-xl mx-auto">
+                    Timu yetu inajumuisha wataalamu wa Teknolojia ya Habari, Sheria za Biashara, na Wataalamu wa Kilimo Biashara.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <!-- Mjumbe 1: Salimu -->
+                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden text-center p-6 space-y-4 hover:shadow-md transition">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-emerald-100 bg-slate-100 flex items-center justify-center">
+                        <!-- Weka picha yako halisi hapa: <img src="images/salimu.jpg" alt="Salimu" class="w-full h-full object-cover"> -->
+                        <i class="fa-solid fa-user-tie text-4xl text-emerald-700"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg">Salimu</h3>
+                        <p class="text-xs font-medium text-emerald-700">Founder & Chief Executive Officer (CEO)</p>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Mtaalamu wa Mifumo ya Kidijitali na Kilimo Biashara, Msimamizi Mkuu wa Mikakati ya Ukuaji wa AgroBusiness Portal.
+                    </p>
+                    <div class="flex justify-center gap-3 pt-2 text-slate-400">
+                        <a href="#" class="hover:text-emerald-700 transition"><i class="fa-brands fa-linkedin text-sm"></i></a>
+                        <a href="tel:0795153166" class="hover:text-emerald-700 transition"><i class="fa-solid fa-phone text-sm"></i></a>
+                    </div>
+                </div>
+
+                <!-- Mjumbe 2: Masefu -->
+                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden text-center p-6 space-y-4 hover:shadow-md transition">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-emerald-100 bg-slate-100 flex items-center justify-center">
+                        <!-- Weka picha halisi hapa: <img src="images/masefu.jpg" alt="Masefu" class="w-full h-full object-cover"> -->
+                        <i class="fa-solid fa-user-circle text-4xl text-emerald-700"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg">Masefu</h3>
+                        <p class="text-xs font-medium text-emerald-700">Co-Founder & Operations Director</p>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Mratibu Mkuu wa Shughuli za Kiutendaji, Mawasiliano ya Wateja, na Uhusiano wa Wafanyabiashara na Wakulima.
+                    </p>
+                    <div class="flex justify-center gap-3 pt-2 text-slate-400">
+                        <a href="#" class="hover:text-emerald-700 transition"><i class="fa-brands fa-linkedin text-sm"></i></a>
+                        <a href="#" class="hover:text-emerald-700 transition"><i class="fa-solid fa-envelope text-sm"></i></a>
+                    </div>
+                </div>
+
+                <!-- Mjumbe 3: Kitengo cha Kisheria & Ushauri -->
+                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden text-center p-6 space-y-4 hover:shadow-md transition">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-emerald-100 bg-slate-100 flex items-center justify-center">
+                        <i class="fa-solid fa-scale-balanced text-4xl text-emerald-700"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg">Scientia-Juris Consult</h3>
+                        <p class="text-xs font-medium text-emerald-700">Legal & Compliance Advisory</p>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Wabobezi katika Ulinzi wa Mlaji, Mikataba ya Biashara, na Urasmi wa Kisheria chini ya Mfumo wa Sheria wa Tanzania.
+                    </p>
+                    <div class="flex justify-center gap-3 pt-2 text-slate-400">
+                        <a href="#" class="hover:text-emerald-700 transition"><i class="fa-solid fa-gavel text-sm"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Location & Anwani za Ofisi (Office Location & Map) -->
+        <section class="bg-white p-8 md:p-10 rounded-3xl border border-slate-100 shadow-sm space-y-8">
+            <div class="text-center space-y-2">
+                <span class="text-xs font-bold text-emerald-800 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">
+                    Mahali Tunapopatikana
+                </span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight">
+                    Ofisi Zetu na Mawasiliano Rasmi
+                </h2>
+                <p class="text-xs md:text-sm text-slate-500">
+                    Karibu katika ofisi zetu kwa ajili ya ushauri wa kibiashara, usajili wa kikundi cha wakulima, au ushirikiano.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Info Column -->
+                <div class="space-y-6 md:col-span-1">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center shrink-0 font-bold">
+                            📍
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Ofisi Kuu (HQ)</h4>
+                            <p class="text-xs text-slate-600 mt-1">Bagamoyo / Pwani - Tanzania</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Eneo la Biashara na Kilimo</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center shrink-0 font-bold">
+                            📞
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Simu / WhatsApp</h4>
+                            <p class="text-xs text-slate-600 mt-1 font-mono font-bold">0795153166</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Inapatikana Siku zote (24/7)</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center shrink-0 font-bold">
+                            ✉️
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Barua Pepe (Email)</h4>
+                            <p class="text-xs text-slate-600 mt-1">info@agribusiness.co.tz</p>
+                            <p class="text-xs text-slate-400 mt-0.5">support@agribusiness.co.tz</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps Embed -->
+                <div class="md:col-span-2 rounded-2xl overflow-hidden border border-slate-200 min-h-[250px] shadow-inner">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126780.95759719462!2d38.82522778648839!3d-6.443906337580662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4d058cfc3b31%3A0xb36b57116743320c!2sBagamoyo!5e0!3m2!1sen!2stz!4v1700000000000!5m2!1sen!2stz"
+                        width="100%"
+                        height="100%"
+                        style="border:0; min-height: 260px;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+  <!-- Official Footer / Footnote (Larger Font Version) -->
+<footer class="bg-slate-900 text-slate-200 text-sm py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+       
+        <!-- Column 1: Brand Info -->
+        <div class="space-y-4 md:col-span-2">
+            <div class="flex items-center gap-2.5 text-white font-bold text-xl">
+                <i class="fa-solid fa-wheat-awn text-emerald-400 text-2xl"></i> AgroBusiness Portal
+            </div>
+            <p class="text-slate-300 leading-relaxed max-w-sm text-sm">
+                Mfumo rasmi wa kidijitali wa kuunganisha wazalishaji wa Kilimo, Mifugo na Uvuvi na masoko ndani na nje ya Tanzania.
+            </p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="space-y-3">
+            <h4 class="text-white font-bold text-base border-b border-slate-800 pb-2 inline-block">Kurasa Muhimu</h4>
+            <ul class="space-y-2 text-sm">
+                <li><a href="index.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Sokoni (Marketplace)</a></li>
+                <li><a href="about.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Kuhusu Sisi (About Us)</a></li>
+                <li><a href="services.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Huduma Zetu (Our Services)</a></li>
+                <li><a href="market-prices.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Bei za Masoko (Market Prices)</a></li>
+                <li><a href="terms.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Masharti na Vigezo</a></li>
+                <li><a href="privacy.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Sera ya Faragha</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Contact Info -->
+        <div class="space-y-3">
+            <h4 class="text-white font-bold text-base border-b border-slate-800 pb-2 inline-block">Mawasiliano</h4>
+            <div class="space-y-2.5 text-sm">
+                <p class="flex items-center gap-2.5"><i class="fa-solid fa-location-dot text-emerald-400 text-base"></i> Bagamoyo, Pwani - Tanzania</p>
+                <p class="flex items-center gap-2.5 font-mono"><i class="fa-solid fa-phone text-emerald-400 text-base"></i> Simu: 0795153166</p>
+                <p class="flex items-center gap-2.5"><i class="fa-solid fa-envelope text-emerald-400 text-base"></i> Email: info@agribusiness.co.tz</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footnote Bottom Bar -->
+    <div class="max-w-6xl mx-auto px-4 pt-8 border-t border-slate-800 text-center text-slate-400 text-xs md:text-sm">
+        <p>&copy; <span id="copyrightYear">2026</span> AgroBusiness Portal. Haki zote zimehifadhiwa.</p>
+    </div>
+</footer>
+
+<!-- Dynamic Year Script -->
+<script>
+    if (document.getElementById('copyrightYear')) {
+        document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+    }
+</script>
+
+</body>
+</html>

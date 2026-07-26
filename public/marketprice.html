@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bei za Masoko (Market Prices) | AgroBusiness Portal</title>
+   
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Bar -->
+    <header class="bg-emerald-800 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2.5">
+                <i class="fa-solid fa-wheat-awn text-emerald-400 text-2xl"></i>
+                <span class="text-xl font-bold tracking-tight">AgroBusiness Portal</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-xl transition flex items-center gap-2 border border-emerald-600">
+                    <i class="fa-solid fa-arrow-left"></i> Rudi Sokoni
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-emerald-900 text-white py-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10 space-y-3">
+            <span class="bg-emerald-800 text-emerald-300 text-xs font-semibold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block border border-emerald-700">
+                Taarifa za Soko na Bei Elekezi
+            </span>
+            <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight">
+                Bei za Mazao Masokoni (Market Prices)
+            </h1>
+            <p class="text-xs md:text-sm text-emerald-100 max-w-xl mx-auto font-normal">
+                Kagua bei za hivi karibuni za mazao ya Kilimo, Mifugo na Uvuvi katika masoko mbalimbali nchini Tanzania.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8 flex-grow w-full">
+
+        <!-- Controls: Search & Last Updated Badge -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+           
+            <!-- Search Box -->
+            <div class="relative w-full md:w-96">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input
+                    type="text"
+                    id="searchInput"
+                    onkeyup="filterPrices()"
+                    placeholder="Tafuta zao (k.m Mchele, Samaki, Mahindi)..."
+                    class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 focus:bg-white transition"
+                >
+            </div>
+
+            <!-- Last Updated Info -->
+            <div class="text-xs text-slate-500 font-medium flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Mara ya mwisho kuboreshwa: <strong id="lastUpdatedDate" class="text-slate-800">Leo</strong></span>
+            </div>
+        </div>
+
+        <!-- Price Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-600">
+                    <thead class="bg-slate-100 text-slate-800 font-bold uppercase tracking-wider border-b border-slate-200">
+                        <tr>
+                            <th class="py-3.5 px-4">Aina ya Zao / Bidhaa</th>
+                            <th class="py-3.5 px-4">Sekta</th>
+                            <th class="py-3.5 px-4">Soko / Mkoa</th>
+                            <th class="py-3.5 px-4">Kipimo</th>
+                            <th class="py-3.5 px-4">Bei ya Wastani (TZS)</th>
+                            <th class="py-3.5 px-4 text-center">Mwelekeo (Trend)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="priceTableBody" class="divide-y divide-slate-100">
+                        <!-- Table content will be loaded dynamically by JavaScript below -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Disclaimer Box -->
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-xs text-amber-800 space-y-1">
+            <div class="font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Angalizo la Kisheria (Disclaimer):
+            </div>
+            <p class="leading-relaxed">
+                Bei zinazoonyeshwa hapa ni bei za wastani za masoko mbalimbali nchini kwa ajili ya uwazi na mwongozo wa kibiashara. Bei halisi inaweza kubadilika kulingana na ubora wa zao, msimu, na makubaliano kati ya muuzaji na mnunuzi.
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Official Footer / Footnote (Larger Font Version) -->
+<footer class="bg-slate-900 text-slate-200 text-sm py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+       
+        <!-- Column 1: Brand Info -->
+        <div class="space-y-4 md:col-span-2">
+            <div class="flex items-center gap-2.5 text-white font-bold text-xl">
+                <i class="fa-solid fa-wheat-awn text-emerald-400 text-2xl"></i> AgroBusiness Portal
+            </div>
+            <p class="text-slate-300 leading-relaxed max-w-sm text-sm">
+                Mfumo rasmi wa kidijitali wa kuunganisha wazalishaji wa Kilimo, Mifugo na Uvuvi na masoko ndani na nje ya Tanzania.
+            </p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="space-y-3">
+            <h4 class="text-white font-bold text-base border-b border-slate-800 pb-2 inline-block">Kurasa Muhimu</h4>
+            <ul class="space-y-2 text-sm">
+                <li><a href="index.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Sokoni (Marketplace)</a></li>
+                <li><a href="about.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Kuhusu Sisi (About Us)</a></li>
+                <li><a href="services.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Huduma Zetu (Our Services)</a></li>
+                <li><a href="market-prices.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Bei za Masoko (Market Prices)</a></li>
+                <li><a href="terms.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Masharti na Vigezo</a></li>
+                <li><a href="privacy.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Sera ya Faragha</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Contact Info -->
+        <div class="space-y-3">
+            <h4 class="text-white font-bold text-base border-b border-slate-800 pb-2 inline-block">Mawasiliano</h4>
+            <div class="space-y-2.5 text-sm">
+                <p class="flex items-center gap-2.5"><i class="fa-solid fa-location-dot text-emerald-400 text-base"></i> Bagamoyo, Pwani - Tanzania</p>
+                <p class="flex items-center gap-2.5 font-mono"><i class="fa-solid fa-phone text-emerald-400 text-base"></i> Simu: 0795153166</p>
+                <p class="flex items-center gap-2.5"><i class="fa-solid fa-envelope text-emerald-400 text-base"></i> Email: info@agribusiness.co.tz</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footnote Bottom Bar -->
+    <div class="max-w-6xl mx-auto px-4 pt-8 border-t border-slate-800 text-center text-slate-400 text-xs md:text-sm">
+        <p>&copy; <span id="copyrightYear">2026</span> AgroBusiness Portal. Haki zote zimehifadhiwa.</p>
+    </div>
+</footer>
+
+<!-- Dynamic Year Script -->
+<script>
+    if (document.getElementById('copyrightYear')) {
+        document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+    }
+</script>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT: UPDATE BEI ZAKO HAPA RAHISI!  -->
+    <!-- ========================================== -->
+    <script>
+        // 🛠️ HAPA NDIAPO UNAPOBADILISHA BEI KILA ZINAPOBADILIKA:
+        const pricesData = [
+            { item: "Mchele (Supa Kyela)", category: "Kilimo", location: "Mbeya / Dar es Salaam", unit: "Kg 1", price: "2,800 - 3,200", trend: "up" },
+            { item: "Mahindi Magumu", category: "Kilimo", location: "Kinyerezi / Dodoma", unit: "Gunia (100kg)", price: "75,000 - 85,000", trend: "stable" },
+            { item: "Korosho Safi (Raw Cashew)", category: "Kilimo", location: "Mtwara / Lindi", unit: "Kg 1", price: "3,500 - 4,000", trend: "up" },
+            { item: "Samaki Sato (Wabichi)", category: "Uvuvi", location: "Mwanza / Kamanga", unit: "Kg 1", price: "9,500 - 11,000", trend: "stable" },
+            { item: "Dagaa wa Ziwa Victoria", category: "Uvuvi", location: "Kagera / Mwanza", unit: "Kilio / Kilo", price: "6,000 - 7,500", trend: "down" },
+            { item: "Nyama ya Ng'ombe (Bila Mfupa)", category: "Mifugo", location: "Bagamoyo / Dar", unit: "Kg 1", price: "10,000 - 12,000", trend: "stable" },
+            { item: "Kuku wa Kienyeji (Majike/Madume)", category: "Mifugo", location: "Morogoro / Pwani", unit: "Kuku 1", price: "18,000 - 25,000", trend: "up" },
+            { item: "Maziwa Mabichi ya Ng'ombe", category: "Mifugo", location: "Tanga / Arusha", unit: "Lita 1", price: "1,200 - 1,500", trend: "stable" },
+            { item: "Ufuta (Sesame Seeds)", category: "Kilimo", location: "Ruvuma / Babati", unit: "Kg 1", price: "3,000 - 3,400", trend: "down" }
+        ];
+
+        // Function to render table
+        function renderPrices(data) {
+            const tbody = document.getElementById('priceTableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-400">Hakuna zao lililopatikana kulingana na utafutaji wako.</td></tr>`;
+                return;
+            }
+
+            data.forEach(p => {
+                let trendBadge = '';
+                if(p.trend === 'up') {
+                    trendBadge = `<span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-[10px] font-bold border border-emerald-200"><i class="fa-solid fa-arrow-trend-up"></i> Imepanda</span>`;
+                } else if(p.trend === 'down') {
+                    trendBadge = `<span class="bg-rose-50 text-rose-700 px-2.5 py-1 rounded-full text-[10px] font-bold border border-rose-200"><i class="fa-solid fa-arrow-trend-down"></i> Imeshuka</span>`;
+                } else {
+                    trendBadge = `<span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-[10px] font-bold border border-slate-200"><i class="fa-solid fa-minus"></i> Imestawi</span>`;
+                }
+
+                const row = `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3.5 px-4 font-bold text-slate-800">${p.item}</td>
+                        <td class="py-3.5 px-4"><span class="bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded text-[11px] font-semibold">${p.category}</span></td>
+                        <td class="py-3.5 px-4 text-slate-600">${p.location}</td>
+                        <td class="py-3.5 px-4 font-medium">${p.unit}</td>
+                        <td class="py-3.5 px-4 font-extrabold text-slate-900 font-mono">${p.price}</td>
+                        <td class="py-3.5 px-4 text-center">${trendBadge}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Search Filter
+        function filterPrices() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = pricesData.filter(p =>
+                p.item.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query) ||
+                p.location.toLowerCase().includes(query)
+            );
+            renderPrices(filtered);
+        }
+
+        // Set Last Updated Date dynamically
+        document.getElementById('lastUpdatedDate').innerText = new Date().toLocaleDateString('sw-TZ', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        // Initial render
+        renderPrices(pricesData);
+    </script>
+</body>
+</html>

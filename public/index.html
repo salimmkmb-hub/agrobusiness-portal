@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroBusiness - Soko la Mazao na Samaki</title>
+    <!-- Tailwind CSS CDN kwa muonekano wa kisasa -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+   <!-- Navigation Bar ya Juu -->
+<nav class="bg-emerald-900 text-white px-6 py-3 flex justify-between items-center shadow-md">
+    <div class="flex items-center space-x-2">
+        <span class="text-2xl">🌾</span>
+        <span class="text-xl font-bold">AgroBusiness Portal</span>
+    </div>
+   
+    <!-- Navigation Links -->
+    <div class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="about.html" class="hover:text-emerald-300 transition">Kuhusu sisi</a>
+        <a href="services.html" class="hover:text-emerald-300 transition">Huduma Zetu</a>
+        <a href="marketprice.html" class="hover:text-emerald-300 transition">Bei za Masoko</a>
+        <a href="policy.html" class="hover:text-emerald-300 transition">Sera ya Faragha</a>
+        <a href="terms.html" class="hover:text-emerald-300 transition" onclick="openTermsModal()">Masharti na Vigezo</a>
+    </div>
+
+    <!-- USSD Code Tag -->
+    <div class="bg-emerald-800 px-3 py-1 rounded text-xs font-mono text-emerald-200">
+        📞 USSD: *384*1000#
+    </div>
+</nav>
+
+    <!-- Main Content Section -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+       
+        <!-- Welcome Banner -->
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-2xl p-6 md:p-8 mb-8 shadow-md">
+            <h2 class="text-3xl font-extrabold mb-2">Soko la Mazao na Bidhaa za Uvuvi</h2>
+            <p class="text-emerald-100 text-lg">Taarifa za hivi karibuni za wakulima na wavuvi kutoka maeneo mbalimbali nchini.</p>
+        </div>
+         <!-- Search Input -->
+        <div class="relative w-full md:w-1/2">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">🔍</span>
+            <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Tafuta zao au eneo (mfano: Mchele, Mwanza)..."
+                   class="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+             <!-- Filter Dropdown -->
+        <div class="w-full md:w-1/3">
+            <select id="categoryFilter" onchange="filterProducts()" class="w-full py-2 px-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                <option value="ALL">Mazao Yote (Kilimo, Uvuvi & Mifugo)</option>
+                <option value="Kilimo">Kilimo Pekee</option>
+                <option value="Uvuvi">Uvuvi Pekee</option>
+                <option value="Mifugo">Mifugo Pekee</option>
+            </select>
+        </div>
+            <div class="text-sm text-gray-500">
+                Jumla ya Bidhaa Sokoni: <span id="productCount" class="font-bold text-emerald-700">0</span>
+            </div>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Data kutoka server zitaingizwa hapa dynamically -->
+            <div class="col-span-full text-center py-12">
+                <i class="fa-solid fa-spinner fa-spin text-4xl text-emerald-600 mb-3"></i>
+                <p class="text-gray-500">Inapakia taarifa za wakulima...</p>
+            </div>
+        </div>
+
+        <!-- Auth Modal (Login / Register) -->
+<div id="buyerModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-md w-full mx-4 border border-slate-100">
+       
+        <!-- Tab Switches -->
+        <div class="flex border-b border-slate-200 mb-6 text-center font-semibold text-sm">
+            <button id="tabLoginBtn" onclick="switchTab('login')" class="w-1/2 py-2 border-b-2 border-emerald-600 text-emerald-700">Ingia (Login)</button>
+            <button id="tabRegisterBtn" onclick="switchTab('register')" class="w-1/2 py-2 text-slate-500 hover:text-emerald-600">Sajili Akaunti Mpya</button>
+        </div>
+
+        <!-- FORM YA LOGIN (KWA WALIOSHAJISAJILI) -->
+        <div id="formLogin">
+            <div class="text-center mb-4">
+                <h3 class="text-lg font-bold text-slate-800">Karibu Tena!</h3>
+                <p class="text-xs text-slate-500">Ingiza Namba ya Simu na Nenosiri uliyosajilia.</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Namba ya Simu:</label>
+                    <input type="tel" id="loginPhone" required placeholder="Mfano: 0795153166" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                </div>
+                <div>
+                   <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nenosiri (Password):</label>
+                     <div class="relative">
+                      <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-3 py-2 pr-10 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                      <button type="button" onclick="togglePassword('loginPassword', 'eyeIconLogin')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-emerald-600">
+                       <i id="eyeIconLogin" class="fas fa-eye"></i>
+                         </button>
+                          </div>
+                          </div>
+                <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg transition text-sm shadow-md">
+                    Ingia Sokoni 🔑
+                </button>
+            </form>
+        </div>
+
+        <!-- FORM YA USAJILI MPYA NA MALIPO (REGISTER) -->
+        <div id="formRegister" class="hidden">
+            <!-- Step 1: Taarifa za Usajili -->
+            <div id="stepRegistration">
+                <form onsubmit="goToPaymentStep(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Jina Kamili:</label>
+                        <input type="text" id="buyerName" required placeholder="Mfano: Salimu Ally" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Namba ya Simu:</label>
+                        <input type="tel" id="buyerPhone" required placeholder="Mfano: 0795153166" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                    </div>
+                    <div>
+                       <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Weka Nenosiri (Password):</label>
+                        <div class="relative">
+                        <input type="password" id="buyerPassword" required placeholder="••••••••" class="w-full px-3 py-2 pr-10 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                        <button type="button" onclick="togglePassword('buyerPassword', 'eyeIconRegister')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-emerald-600">
+                         <i id="eyeIconRegister" class="fas fa-eye"></i>
+                           </button>
+                               </div>
+                                 </div>
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Mkoa / Eneo:</label>
+                        <input type="text" id="buyerLocation" required placeholder="Mfano: Dar es Salaam" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg transition text-sm shadow-md">
+                        Endelea Kwenye Malipo (TZS 1,000) ➔
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 2: Malipo -->
+            <div id="stepPayment" class="hidden space-y-4">
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-center">
+                    <span class="block text-xs text-slate-500 uppercase font-bold">Lipa Namba (M-Pesa / Tigo):</span>
+                    <span class="text-lg font-mono font-bold text-emerald-800">0795153166</span>
+                </div>
+                <form onsubmit="verifyAndCompleteRegistration(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Transaction Ref / Code:</label>
+                        <input type="text" id="verificationCode" required placeholder="Mfano: Ref ya M-Pesa" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono text-center focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg transition text-sm shadow-md">
+                        Kamilisha Usajili 🔓
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <!-- Form yenyewe -->
+       <!-- Modal Form ya Oda -->
+<div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative">
+        <!-- Kitufe cha kufunga Modal (X) -->
+        <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+       
+        <h2 class="text-xl font-bold text-slate-800 mb-1">Weka Oda ya Zao</h2>
+        <p class="text-xs text-gray-500 mb-4">Jaza fomu hii ili kutuma maombi ya kununua kwa muuzaji.</p>
+
+        <!-- Taarifa za Zao za Kiotomatiki -->
+        <div class="grid grid-cols-2 gap-3 mb-4 bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+            <div>
+                <span class="text-[10px] text-emerald-600 font-bold uppercase">Zao Selected</span>
+                <p id="modalCropName" class="text-sm font-extrabold text-emerald-900">Mchele</p>
+            </div>
+            <div>
+                <span class="text-[10px] text-emerald-600 font-bold uppercase">Simu ya Muuzaji</span>
+                <p id="modalSellerPhone" class="text-sm font-mono font-bold text-emerald-900">---</p>
+            </div>
+        </div>
+
+        <!-- Form yenyewe -->
+        <form id="orderForm">
+            <div class="space-y-3">
+                <!-- Kiasi -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Kiasi Unachohitaji (Kg/Idadi)</label>
+                    <input type="number" id="orderQuantity" required min="1" placeholder="Mfano: 10" oninput="calculateModalTotal()"
+                        class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <!-- Bei anayopendekeza Mnunuzi -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Bei Unayopendekeza kwa Kilo/Kitu (TZS)</label>
+                    <input type="number" id="orderOfferedPrice" required min="1" placeholder="Mfano: 2500" oninput="calculateModalTotal()"
+                        class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <!-- Eneo la Utoaji -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Eneo la Kutumiwa / Mahali Unapokaa</label>
+                    <input type="text" id="deliveryLocation" required placeholder="Mfano: Mwenge, Dar es Salaam"
+                        class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <!-- Simu ya Mnunuzi -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Namba Yako ya Simu (Yenymbe WhatsApp/Call)</label>
+                    <input type="tel" id="buyerPhone" required placeholder="Mfano: 0712345678"
+                        class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <!-- Hesabu ya Jumla -->
+                <div class="bg-gray-50 p-3 rounded-lg flex justify-between items-center border border-gray-100 mt-2">
+                    <span class="text-xs font-bold text-gray-600">Jumla ya Thamani:</span>
+                    <span id="modalTotalPrice" class="text-base font-extrabold text-emerald-600">TZS 0</span>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-2 mt-5">
+                <button type="button" onclick="closeOrderModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold py-2.5 rounded-lg">
+                    Ghairi
+                </button>
+                <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 rounded-lg shadow-md">
+                    Kamilisha Oda
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+    </div>
+</div>
+
+    </main>
+<!-- Official Footer / Footnote (Larger Font Version) -->
+<footer class="bg-slate-900 text-slate-200 text-sm py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+       
+        <!-- Column 1: Brand Info -->
+        <div class="space-y-4 md:col-span-2">
+            <div class="flex items-center gap-2.5 text-white font-bold text-xl">
+                <i class="fa-solid fa-wheat-awn text-emerald-400 text-2xl"></i> AgroBusiness Portal
+            </div>
+            <p class="text-slate-300 leading-relaxed max-w-sm text-sm">
+                Mfumo rasmi wa kidijitali wa kuunganisha wazalishaji wa Kilimo, Mifugo na Uvuvi na masoko ndani na nje ya Tanzania.
+            </p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="space-y-3">
+            <h4 class="text-white font-bold text-base border-b border-slate-800 pb-2 inline-block">Kurasa Muhimu</h4>
+            <ul class="space-y-2 text-sm">
+                <li><a href="index.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Sokoni (Marketplace)</a></li>
+                <li><a href="about.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Kuhusu Sisi (About Us)</a></li>
+                <li><a href="services.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Huduma Zetu (Our Services)</a></li>
+                <li><a href="market-prices.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Bei za Masoko (Market Prices)</a></li>
+                <li><a href="terms.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Masharti na Vigezo</a></li>
+                <li><a href="privacy.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i> Sera ya Faragha</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Contact Info -->
+        <div class="space-y-3">
+            <h4 class="text-white font-bold text-base border-b border-slate-800 pb-2 inline-block">Mawasiliano</h4>
+            <div class="space-y-2.5 text-sm">
+                <p class="flex items-center gap-2.5"><i class="fa-solid fa-location-dot text-emerald-400 text-base"></i> Bagamoyo, Pwani - Tanzania</p>
+                <p class="flex items-center gap-2.5 font-mono"><i class="fa-solid fa-phone text-emerald-400 text-base"></i> Simu: 0795153166</p>
+                <p class="flex items-center gap-2.5"><i class="fa-solid fa-envelope text-emerald-400 text-base"></i> Email: info@agribusiness.co.tz</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footnote Bottom Bar -->
+    <div class="max-w-6xl mx-auto px-4 pt-8 border-t border-slate-800 text-center text-slate-400 text-xs md:text-sm">
+        <p>&copy; <span id="copyrightYear">2026</span> AgroBusiness Portal. Haki zote zimehifadhiwa.</p>
+    </div>
+</footer>
+
+<!-- Dynamic Year Script -->
+<script>
+    if (document.getElementById('copyrightYear')) {
+        document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+    }
+</script>
+
+<!-- Dynamic Year Script (Optional: Inasoma mwaka wa sasa kiotomatiki) -->
+<script>
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+</script>
+
+    <!-- Script ya Kuvuta Data -->
+    <script src="app.js"></script>
+    <script>
+        // Kuangalia kama mnunuzi alishajisajili mwanzo (localStorage)
+document.addEventListener('DOMContentLoaded', () => {
+    const isRegistered = localStorage.getItem('agroBuyerRegistered');
+    if (isRegistered) {
+        document.getElementById('buyerModal').classList.add('hidden');
+    }
+});
+
+// Kushughulikia Usajili wa Mnunuzi
+async function handleBuyerRegistration(event) {
+    event.preventDefault();
+   
+    const buyerData = {
+        name: document.getElementById('buyerName').value,
+        phone: document.getElementById('buyerPhone').value,
+        location: document.getElementById('buyerLocation').value,
+        registeredAt: new Date().toISOString()
+    };
+
+    try {
+        // Tuma taarifa za mnunuzi backend
+        await fetch('/api/register-buyer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(buyerData)
+        });
+
+       
+    } catch (err) {
+        console.error('Error registering buyer:', err);
+        alert('Kuna tatizo limetokea, jaribu tena.');
+    }
+}
+
+// Logic ya Kutafuta (Search) na Filter
+function filterProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const category = document.getElementById('categoryFilter').value;
+    const cards = document.querySelectorAll('.product-card');
+
+    cards.forEach(card => {
+        const itemText = card.innerText.toLowerCase();
+        const cardCategory = card.getAttribute('data-category');
+
+        const matchesSearch = itemText.includes(query);
+        const matchesCategory = (category === 'ALL' || cardCategory === category);
+
+        if (matchesSearch && matchesCategory) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+// Switch kuenda hatua ya malipo
+function goToPaymentStep(e) {
+    e.preventDefault();
+    document.getElementById('stepRegistration').classList.add('hidden');
+    document.getElementById('stepPayment').classList.remove('hidden');
+}
+
+// Verification na Ku-save Buyer Firestore
+async function verifyAndCompleteRegistration(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('buyerName').value;
+    const phone = document.getElementById('buyerPhone').value;
+    const location = document.getElementById('buyerLocation').value;
+    const code = document.getElementById('verificationCode').value;
+
+    try {
+        const response = await fetch('/api/register-buyer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name,
+                phone,
+                location,
+                verificationCode: code
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            localStorage.setItem('agroBuyerRegistered', 'true');
+            document.getElementById('buyerModal').classList.add('hidden');
+            alert('Hongera! Usajili na malipo vimekamilika. Karibu sokoni.');
+        } else {
+            alert(data.message || 'Kodi ya uhakiki sio sahihi!');
+        }
+    } catch (err) {
+        console.error('Registration error:', err);
+        alert('Imeshindwa kukamilisha usajili. Jaribu tena.');
+    }
+}
+
+// Function ya kubadilisha Tab kati ya Login na Register
+function switchTab(type) {
+    const loginForm = document.getElementById('formLogin');
+    const registerForm = document.getElementById('formRegister');
+    const loginBtn = document.getElementById('tabLoginBtn');
+    const registerBtn = document.getElementById('tabRegisterBtn');
+
+    if (type === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        loginBtn.className = "w-1/2 py-2 border-b-2 border-emerald-600 text-emerald-700 font-semibold";
+        registerBtn.className = "w-1/2 py-2 text-slate-500 hover:text-emerald-600";
+    } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        registerBtn.className = "w-1/2 py-2 border-b-2 border-emerald-600 text-emerald-700 font-semibold";
+        loginBtn.className = "w-1/2 py-2 text-slate-500 hover:text-emerald-600";
+    }
+}
+
+// Handler ya Login kwa mtumiaji wa zamani
+async function handleLogin(e) {
+    e.preventDefault();
+    const phone = document.getElementById('loginPhone').value;
+    const password = document.getElementById('loginPassword').value;
+
+    try {
+        const response = await fetch('/api/login-buyer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            localStorage.setItem('agroBuyerRegistered', 'true');
+            localStorage.setItem('buyerPhone', phone);
+            document.getElementById('buyerModal').classList.add('hidden');
+            alert('Umefanikiwa kuingia sokoni!');
+        } else {
+            alert(data.message || 'Namba ya simu au nenosiri sio sahihi!');
+        }
+    } catch (err) {
+        console.error('Login Error:', err);
+        alert('Kuna tatizo la mtandao, jaribu tena.');
+    }
+}
+// Function ya kuonyesha na kuficha Password
+function togglePassword(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const eyeIcon = document.getElementById(iconId);
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        // Badilisha icon kuwa jicho lililofungwa/kukatwa (eye-slash)
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        // Badilisha icon kurudi kwenye jicho la kawaida (eye)
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+}
+
+    </script>
+    
+</body>
+</html>
