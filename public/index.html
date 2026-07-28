@@ -7,6 +7,69 @@
     <!-- Tailwind CSS CDN kwa muonekano wa kisasa -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Styling za kawaida (Desktop First) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c3e50;
+  padding: 15px 30px;
+  color: white;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.search-btn, .menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Ficha Menu Icon ya Hamburger kwenye skrini kubwa */
+.menu-toggle {
+  display: none;
+}
+
+/* ---------------------------------------------------- */
+/* MEDIA QUERY: Mabadiliko yakitokea kwenye Simu (Skrini chini ya 768px) */
+/* ---------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Ficha links za kawaida */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #2c3e50;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  /* Onyesha Menu Icon (Hamburger) kwenye simu */
+  .menu-toggle {
+    display: inline-block;
+  }
+
+  /* Ikibonyezwa, onyesha menu */
+  .nav-links.active {
+    display: flex;
+  }
+}
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
@@ -25,7 +88,7 @@
         <a href="policy.html" class="hover:text-emerald-300 transition">Sera ya Faragha</a>
         <a href="terms.html" class="hover:text-emerald-300 transition" onclick="openTermsModal()">Masharti na Vigezo</a>
     </div>
-
+      <button class="menu-toggle" id="mobile-menu">☰</button>
     <!-- USSD Code Tag -->
     <div class="bg-emerald-800 px-3 py-1 rounded text-xs font-mono text-emerald-200">
         📞 USSD: *384*1000#
@@ -461,7 +524,12 @@ function togglePassword(inputId, iconId) {
         eyeIcon.classList.add('fa-eye');
     }
 }
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.querySelector('.nav-links');
 
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
     </script>
     
 </body>

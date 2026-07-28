@@ -7,13 +7,12 @@ const { getFirestore } = require('firebase-admin/firestore');
 
 const app = express();
 
-// 1. Unganisha Firebase Admin SDK Safi
+// Initialization ya Firebase
 let serviceAccount;
 
 try {
-  // Jaribu kusoma secret file kwanza (Render Secret File au Local file)
   const secretPath = path.join(__dirname, 'serviceAccountKey.json');
- 
+
   if (fs.existsSync(secretPath)) {
     serviceAccount = require(secretPath);
   } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
@@ -23,11 +22,14 @@ try {
     }
   }
 
-  initializeApp({
-    credential: cert(serviceAccount)
-  });
-
-  console.log("Firebase Admin SDK initialized successfully!");
+  if (serviceAccount) {
+    initializeApp({
+      credential: cert(serviceAccount)
+    });
+    console.log("Firebase Admin SDK initialized successfully!");
+  } else {
+    console.error("Firebase credentials not found!");
+  }
 } catch (error) {
   console.error("Firebase Admin Initialization Error:", error.message);
 }
