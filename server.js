@@ -954,118 +954,77 @@ Hali: Mwanachama Aliyesajiliwa (Active)`;
     res.send(response);
 });
 
-// ====================================================
-// API ENDPOINT YA WEBSITE (KUVUTA MAZAO YOTE FIRESTORE)
-// ====================================================
-app.get('/api/products', async (req, res) => {
-    try {
-        const snapshot = await db.collection('products').where('status', '==', 'AVAILABLE').get();
-        let products = [];
-        snapshot.forEach(doc => {
-            products.push({ id: doc.id, ...doc.data() });
-        });
-        res.status(200).json({ success: true, data: products });
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ success: false, message: "Imeshindikana kupata mazao" });
-    }
-});
-
-// Anzisha Server kwenye Port 3000
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server ya Agribusiness inaendeshwa kwenye port ${PORT}`);
-});
-// Endpoint ya Kusajili Wanunuzi kutoka Website
+// 1. Endpoint ya Kusajili Mnunuzi (Inajumuisha Password, Verification Code & Payment Status)
 app.post('/api/register-buyer', async (req, res) => {
-    try {
-        const { name, phone, location, registeredAt } = req.body;
-       
-        await db.collection('buyers').add({
-            name,
-            phone,
-            location,
-            registeredAt: registeredAt || new Date().toISOString()
-        });
+  try {
+    const { name, phone, password, location, verificationCode } = req.body;
 
-        res.status(200).json({ success: true, message: 'Mnunuzi amesajiliwa kikamilifu' });
-    } catch (error) {
-        console.error('Error saving buyer:', error);
-        res.status(500).json({ success: false, message: 'Imeshindwa kusajili mnunuzi' });
+    // Angalia kama namba au kodi vipo
+    if (!phone) {
+      return res.status(400).json({ success: false, message: 'Tafadhali ingiza namba ya simu' });
     }
-});
-// Endpoint ya Kusajili Mnunuzi aliyelipia
-app.post('/api/register-buyer', async (req, res) => {
-    try {
-        const { name, phone, location, verificationCode } = req.body;
 
-        if (!verificationCode || verificationCode.trim() === '') {
-            return res.status(400).json({ success: false, message: 'Tafadhali ingiza kodi ya uhakiki' });
-        }
+    // Hifadhi kwenye Firestore Collection ya 'buyers'
+    await db.collection('buyers').add({
+      name: name || '',
+      phoneNumber: phone, // Neno 'phoneNumber' ili lifanane na linalotafutwa kwenye Login
+      password: password || '',
+      location: location || '',
+      verificationCode: verificationCode || null,
+      paymentStatus: verificationCode ? 'PAID' : 'PENDING',
+      createdAt: new Date().toISOString()
+    });
 
-        // Hifadhi kwenye Firestore Collection ya 'buyers'
-        await db.collection('buyers').add({
-            name: name,
-            phoneNumber: phone,
-            location: location,
-            verificationCode: verificationCode,
-            paymentStatus: 'PAID', // Inaainisha kuwa amelipia
-            registeredAt: new Date().toISOString()
-        });
+    res.status(200).json({
+      success: true,
+      message: 'Usajili umekamilika kikamilifu!'
+    });
 
-        res.status(200).json({
-            success: true,
-            message: 'Mnunuzi amesajiliwa kikamilifu'
-        });
-
-    } catch (error) {
-        console.error('Error saving buyer to Firestore:', error);
-        res.status(500).json({ success: false, message: 'Kosa la server, jaribu tena.' });
-    }
-});
-// 1. Endpoint ya Usajili (Register + Save Password)
-app.post('/api/register-buyer', async (req, res) => {
-    try {
-        const { name, phone, password, location, verificationCode } = req.body;
-
-        await db.collection('buyers').add({
-            name,
-            phoneNumber: phone,
-            password: password, // Kwenye mfumo mkubwa unaweza ku-hash nenosiri hapa
-            location,
-            verificationCode,
-            paymentStatus: 'PAID',
-            createdAt: new Date().toISOString()
-        });
-
-        res.status(200).json({ success: true, message: 'Usajili umekamilika!' });
-    } catch (error) {
-        console.error('Register error:', error);
-        res.status(500).json({ success: false, message: 'Kosa la server' });
-    }
+  } catch (error) {
+    console.error('Register Error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Kosa la server, jaribu tena.'
+    });
+  }
 });
 
 // 2. Endpoint ya Kuingia (Login)
 app.post('/api/login-buyer', async (req, res) => {
-    try {
-        const { phone, password } = req.body;
+  try {
+    const { phone, password } = req.body;
 
-        const snapshot = await db.collection('buyers')
-            .where('phoneNumber', '==', phone)
-            .where('password', '==', password)
-            .get();
+    const snapshot = await db.collection('buyers')
+      .where('phoneNumber', '==', phone)
+      .where('password', '==', password)
+      .get();
 
-        if (snapshot.empty) {
-            return res.status(401).json({ success: false, message: 'Namba ya simu au nenosiri si sahihi!' });
-        }
-
-        res.status(200).json({ success: true, message: 'Login successful' });
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ success: false, message: 'Kosa la server' });
+    if (snapshot.empty) {
+      return res.status(401).json({
+        success: false,
+        message: 'Namba ya simu au nenosiri si sahihi!'
+      });
     }
+
+    res.status(200).json({
+      success: true,
+      message: 'Login successful'
+    });
+
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Kosa la server'
+    });
+  }
 });
 
+// WEKA HII CHINI KABISA MWA SERVER.JS
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server ya Agribusiness inaendeshwa kwenye port ${PORT}`);
+});
 // Route ya kupokea Oda na kutuma taarifa kwa muuzaji
 app.post('/api/tuma-oda', (req, res) => {
     try {
@@ -1092,4 +1051,8 @@ app.post('/api/tuma-oda', (req, res) => {
             message: "Kuna tatizo lililotokea kwenye server."
         });
     }
+});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server ya Agribusiness inaendeshwa kwenye port ${PORT}`);
 });
