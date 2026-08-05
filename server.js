@@ -1019,12 +1019,6 @@ app.post('/api/login-buyer', async (req, res) => {
     });
   }
 });
-
-// WEKA HII CHINI KABISA MWA SERVER.JS
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server ya Agribusiness inaendeshwa kwenye port ${PORT}`);
-});
 // Route ya kupokea Oda na kutuma taarifa kwa muuzaji
 app.post('/api/tuma-oda', (req, res) => {
     try {
@@ -1052,7 +1046,7 @@ app.post('/api/tuma-oda', (req, res) => {
         });
     }
 });
-const PORT = process.env.PORT || 3000;
+// Hii ndiyo iwe kodi ya mwisho kabisa chini ya server.js
 app.listen(PORT, () => {
-  console.log(`Server ya Agribusiness inaendeshwa kwenye port ${PORT}`);
+    console.log(`Server ya Agribusiness inaendeshwa kwenye port ${PORT}`);
 });
